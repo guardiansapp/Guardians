@@ -1,0 +1,6 @@
+spring.jpa.open-in-view=true
+
+spring.profiles.active=prod
+
+jwt.secret=sequenciaDeCaracteresParaSeremEmbarralhadosJuntossAoJWT
+jwt.expiration=20160000
