@@ -62,7 +62,7 @@ public class SendNotificationService {
 
 			JsonNode childNode1 = mapper.createObjectNode();
 			((ObjectNode) childNode1).put("to", notificacao.getId().getUsuario().getNotificationToken());
-			((ObjectNode) childNode1).put("title", notificacao.getId().getGrupo().getNome() + " - " + notificacao.getId().getNotificacao().getUsuario());
+			((ObjectNode) childNode1).put("title", notificacao.getId().getGrupo().getNome() + " - " + notificacao.getId().getNotificacao().getUsuario().getNome());
 			((ObjectNode) childNode1).put("body", notificacao.getId().getNotificacao().getMensagem());
 			
 			String json = childNode1.toPrettyString();
