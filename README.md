@@ -18,7 +18,7 @@ git clone https://github.com/guardiansapp/Guardians.git
 > Logo em seguida entre na pasta do repositório:
 
 ~~~console
-cd Guardians
+cd Guardians/Backend
 ~~~
 
 > Faça o build do projeto com o maven. Esse processo pode demorar um pouco.
@@ -54,12 +54,20 @@ cd Frontend
 npm install -g expo-cli
 ~~~
 
+> Baixe as dependencias do projeto com o comando:
+
+~~~console
+npm install
+~~~
+
 > Execute o aplicativo com o comando 
 
 ~~~console
 npm start
 ~~~
 
-> No seu browser irá abrir uma janela com um QRcode, para vizualizar o aplicativo escaneie o QRcode com o aplicativo expoGO que pode ser localizado na google play.
+> O aplicativo irá ser executado com um banco de dados de teste, sempre que fechar o aplicativo os dados serão perdidos, para persistir os dados crie uma conexão com um banco postgreSQL mudando o profile de execução no arquivo de propriedades presente na pasta resources.
 
-> Para mais informações ou sugestões de melhoria acesse nosso site: https://guardiansapp.github.io
+> No seu browser irá abrir uma janela com um QRcode, para vizualizar o aplicativo escaneie o QRcode com o aplicativo 'Expo Go' que pode ser localizado na google play.
+
+> Para mais informações ou sugestões de melhoria acesse nosso site: https://guardiansapp.github.io.
