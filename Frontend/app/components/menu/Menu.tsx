@@ -72,7 +72,7 @@ export default function Menu(props: props) {
             <Dialog.Container visible={visible}>
                 <Dialog.Title style={{ fontSize: 23, color: "#022217" }}>Adicionar guardião</Dialog.Title>
                 <Dialog.Description style={{ fontSize: 17 }}>
-                    Para definir um guardião entre com o id dele e confirme.
+                    Para definir um guardião entre com o id dele e confirme. Se você já tiver um guardião ele será substituido.
                 </Dialog.Description>
                 <Dialog.Input placeholder={"Id do guardião"} keyboardType={"numeric"} style={{ fontSize: 17 }} value={guardianId} onChangeText={(text) => setGuardianId(text)} />
                 <Dialog.Button style={{ fontSize: 17, color: "#264e34" }} label="Cancelar" onPress={() => {

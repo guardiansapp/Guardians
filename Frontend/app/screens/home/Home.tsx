@@ -86,7 +86,7 @@ export default function Home({ navigation }: { navigation: any }) {
 
             <Text
                 style={styles.welcomeText}
-            >Olá {nome}, {'\n'}seu ID de usuário é: {id}.</Text>
+            >Olá {nome}, {'\n'}Você é o usuário {id}</Text>
             <TouchableOpacity
                 onPress={() => {
 
@@ -124,6 +124,8 @@ export default function Home({ navigation }: { navigation: any }) {
                 style={styles.buttonRound}
             >
                 <Image source={require('../../../assets/airplane.png')} style={styles.buttonImg}></Image>
+                <Text style={styles.textInsideButton}>CLIQUE AQUI PARA ENVIAR</Text>
+                <Text style={styles.textInsideButton}>A NOTIFICAÇÃO</Text>
             </TouchableOpacity>
 
             <Menu
@@ -277,5 +279,12 @@ const styles = StyleSheet.create({
         height: 100,
         resizeMode: 'stretch'
     },
+    textInsideButton: {
+        color:'white',
+        fontSize: 17,
+        fontWeight: 'bold',
+        position: 'relative',
+        top: 20
+    }
 
 });

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ImageBackground, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { TextInputMask } from 'react-native-masked-text';
 import ViaCepService from "../../apis/viacep/VIACEP";
 
@@ -15,7 +16,7 @@ export default function Signin2Screen({ navigation, route }: any) {
     const [dtNasc, setDtNasc] = useState(route.params.dt);
 
     const [email, setEmail] = useState(route.params.email);
-    
+
 
     const [cep, setCep] = useState('');
     const [logradouro, setLogrdouro] = useState('');
@@ -27,130 +28,132 @@ export default function Signin2Screen({ navigation, route }: any) {
 
     useEffect(() => {
 
-        if(cep.length == 9){
+        if (cep.length == 9) {
             let service = new ViaCepService();
 
             let data = {
-                'logradouro' : '',
-                'bairro' : '',
-                'cidade' : '',
-                'estado' : ''
+                'logradouro': '',
+                'bairro': '',
+                'cidade': '',
+                'estado': ''
             };
 
             service.getAddressByZipCode(cep)
-            .then(function (response) {
-                const respObj = response.data;
-                
-                data.logradouro = respObj.logradouro;
-                data.bairro = respObj.bairro;
-                data.cidade = respObj.localidade;
-                data.estado = respObj.uf;
+                .then(function (response) {
+                    const respObj = response.data;
 
-                setLogrdouro(data.logradouro);
-                setBairro(data.bairro);
-                setCidade(data.cidade);
-                setEstado(data.estado);
+                    data.logradouro = respObj.logradouro;
+                    data.bairro = respObj.bairro;
+                    data.cidade = respObj.localidade;
+                    data.estado = respObj.uf;
 
-                console.log(data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+                    setLogrdouro(data.logradouro);
+                    setBairro(data.bairro);
+                    setCidade(data.cidade);
+                    setEstado(data.estado);
 
-            
+                    console.log(data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
-        }else{
+
+
+        } else {
             setLogrdouro('');
             setBairro('');
             setCidade('');
             setEstado('');
         }
     }, [cep]);
-    return (       
+    return (
 
         <View style={styles.container}>
 
-            {/* <ImageBackground source={require("../../../assets/Back3.png")} style={styles.background}>
-            </ImageBackground> */}
+            <ScrollView>
 
-            <Text style={styles.textTitle}>Estamos quase lá, agora informe seu endereço.</Text>
+                <Text style={styles.textTitle}>Estamos quase lá, agora informe seu endereço.</Text>
 
-            <TextInputMask
-                style={styles.input}
-                type={'zip-code'}
-                options={{
-                    maskType:'BRL',
-                }}
-                value={cep}
-                onChangeText={text => setCep(text)}
-                placeholder={"CEP"}
-                keyboardType={"numeric"}
-            />
+                <Text style={styles.imputText}>CEP</Text>
+                <TextInputMask
+                    style={styles.input}
+                    type={'zip-code'}
+                    options={{
+                        maskType: 'BRL',
+                    }}
+                    value={cep}
+                    onChangeText={text => setCep(text)}
+                    placeholder={"00000-000"}
+                    keyboardType={"numeric"}
+                />
 
-            <TextInput
-                style={[ styles.input, styles.disabledColor ]}
-                placeholder={"LOGRADOURO"}
-                value={logradouro}
-                editable={false}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder={"NÚMERO"}
-                onChangeText={(text)=> setNumero(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder={"COMPLEMENTO"}
-                onChangeText={(text)=> setComplemento(text)}
-            />
-            <TextInput
-                style={[ styles.input, styles.disabledColor ]}
-                placeholder={"BAIRRO"}
-                value={bairro}
-                editable={false}
-            />
-            <TextInput
-                style={[ styles.input, styles.disabledColor ]}
-                placeholder={"CIDADE"}
-                value={cidade}
-                editable={false}
-            />
-            <TextInput
-                style={[ styles.input, styles.disabledColor ]}
-                placeholder={"ESTADO"}
-                value={estado}
-                editable={false}
-            />
+                <Text style={styles.imputText}>Logradouro</Text>
+                <TextInput
+                    style={[styles.input, styles.disabledColor]}
+                    value={logradouro}
+                    editable={false}
+                />
+                <Text style={styles.imputText}>Número</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => setNumero(text)}
+                />
+                <Text style={styles.imputText}>Complemento (Opcional)</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => setComplemento(text)}
+                />
+                <Text style={styles.imputText}>Bairro</Text>
+                <TextInput
+                    style={[styles.input, styles.disabledColor]}
+                    value={bairro}
+                    editable={false}
+                />
+                <Text style={styles.imputText}>Cidade</Text>
+                <TextInput
+                    style={[styles.input, styles.disabledColor]}
+                    value={cidade}
+                    editable={false}
+                />
+                <Text style={styles.imputText}>Estado</Text>
+                <TextInput
+                    style={[styles.input, styles.disabledColor]}
+                    value={estado}
+                    editable={false}
+                />
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
 
-                    if(cep.length > 0 && estado.length > 0 && cidade.length > 0 && bairro.length > 0 && logradouro.length > 0 && numero.length > 0) {
-                        const cepTemp = cep.replace('-', '');
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
 
-                        navigation.navigate('signin3', {
-                            "nome" : nome,
-                            "sobrenome" : sobrenome,
-                            "email" : email,
-                            "telefone" : telefone,
-                            "dt" : dtNasc, 
-                            "cep" : cepTemp,
-                            "estado" : estado,
-                            "cidade" : cidade,
-                            "bairro" : bairro,
-                            "logradouro" : logradouro,
-                            "numero" : numero,
-                            "complemento": complemento == '' ? null : complemento
-                        });
-                    }else{
-                        Alert.alert("Erro!", "Único campo não obrigatório é o complemento, para prosseguir preencha os demais campos (verifique se o seu CEP está correto).");
-                    }
+                        if (cep.length > 0 && estado.length > 0 && cidade.length > 0 && bairro.length > 0 && logradouro.length > 0 && numero.length > 0) {
+                            const cepTemp = cep.replace('-', '');
 
-                }}
-            >
-                <Text style={styles.buttonText}>AVANÇAR</Text>
-            </TouchableOpacity>
+                            navigation.navigate('signin3', {
+                                "nome": nome,
+                                "sobrenome": sobrenome,
+                                "email": email,
+                                "telefone": telefone,
+                                "dt": dtNasc,
+                                "cep": cepTemp,
+                                "estado": estado,
+                                "cidade": cidade,
+                                "bairro": bairro,
+                                "logradouro": logradouro,
+                                "numero": numero,
+                                "complemento": complemento == '' ? null : complemento
+                            });
+                        } else {
+                            Alert.alert("Erro!", "Único campo não obrigatório é o complemento, para prosseguir preencha os demais campos (verifique se o seu CEP está correto).");
+                        }
+
+                    }}
+                >
+                    <Text style={styles.buttonText}>AVANÇAR</Text>
+                </TouchableOpacity>
+            </ScrollView>
 
 
         </View>

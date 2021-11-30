@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         width: 240,
+        alignSelf: "center",
         margin: 3,
         borderRadius: 5,
         borderWidth: 1,
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#264e34",
         borderRadius: 5,
         margin: 1,
+        alignSelf: "center",
     },
     textTitle :{
         color: "#022217",
@@ -40,13 +43,15 @@ const styles = StyleSheet.create({
         margin: 20,
         marginTop: 30,
         marginBottom:20,
-        textAlign: "center"
+        textAlign: "center",
+        alignSelf: "center",
     },
     text: {
         color: "#022217",
         fontSize: 18,
         marginTop: 15,
         fontWeight : "bold",
+        alignSelf:"center"
     },
     buttonText : {
         margin:10,
@@ -54,6 +59,11 @@ const styles = StyleSheet.create({
         marginRight: 30,
         color: "white",
         fontSize: 18
+    },
+    imputText: {
+        color: "#022217",
+        fontSize: 15,
+        textAlign:"center"
     }
 
 });

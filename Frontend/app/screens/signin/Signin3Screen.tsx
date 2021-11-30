@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ImageBackground, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import Calls from "../../apis/guardians/Calls";
 import TokenHandler from "../../apis/guardians/TokenHandler";
 import AsyncStorageUtils from "../../util/AsyncStorageUtils";
@@ -59,6 +60,7 @@ export default function Signin2Screen({ navigation, route }: any) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
     const [dica1, setDica1] = useState('');
     const [dica2, setDica2] = useState('');
 
@@ -102,104 +104,113 @@ export default function Signin2Screen({ navigation, route }: any) {
         <View style={styles.container}>
 
 
-            <Text style={styles.textTitle}>Para finalizar seu cadastro, informe suas credenciais de login.</Text>
+            <ScrollView>
 
-            <TextInput
-                style={styles.input}
-                placeholder={"NOME DE USUÁRIO"}
-                value={username}
-                onChangeText={(text) => setUsername(text)}
-            />
-            <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                placeholder={"SENHA"}
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-            />
+                <Text style={styles.textTitle}>Para finalizar seu cadastro, informe suas credenciais de login.</Text>
 
-            <Text style={styles.textTitle}>Caso necessite recuperar a senha, informe duas dicas para lhe ajudar a lembrá-la.</Text>
+                <Text style={styles.imputText}>Nome</Text>
+                <TextInput
+                    style={styles.input}
+                    value={username}
+                    onChangeText={(text) => setUsername(text)}
+                />
+                <Text style={styles.imputText}>Senha</Text>
+                <TextInput
+                    style={styles.input}
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
+                />
+                <Text style={styles.imputText}>Digite novamente a senha</Text>
+                <TextInput
+                    style={styles.input}
+                    secureTextEntry={true}
+                    value={password1}
+                    onChangeText={(text) => setPassword1(text)}
+                />
 
-            <TextInput
-                style={styles.input}
-                maxLength={30}
-                placeholder={"DICA DA SENHA 1"}
-                value={dica1}
-                onChangeText={(text) => setDica1(text)}
-            />
-            <TextInput
-                style={styles.input}
-                maxLength={30}
-                placeholder={"DICA DA SENHA 2"}
-                value={dica2}
-                onChangeText={(text) => setDica2(text)}
-            />
+                <Text style={styles.textTitle}>Caso necessite recuperar a senha, informe duas dicas para lhe ajudar a lembrá-la.</Text>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
+                <Text style={styles.imputText}>Dica 01</Text>
+                <TextInput
+                    style={styles.input}
+                    maxLength={30}
+                    value={dica1}
+                    onChangeText={(text) => setDica1(text)}
+                />
+                <Text style={styles.imputText}>Dica 02</Text>
+                <TextInput
+                    style={styles.input}
+                    maxLength={30}
+                    value={dica2}
+                    onChangeText={(text) => setDica2(text)}
+                />
 
-                    usuario.nome = nome;
-                    usuario.sobrenome = sobrenome;
-                    usuario.idade = dtNasc;
-                    usuario.email = email;
-                    usuario.telefones = [telefone];
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
 
-                    usuario.acesso.nomeUsuario = username;
-                    usuario.acesso.senha = password;
-                    usuario.acesso.dica1 = dica1;
-                    usuario.acesso.dica2 = dica2;
+                        usuario.nome = nome;
+                        usuario.sobrenome = sobrenome;
+                        usuario.idade = dtNasc;
+                        usuario.email = email;
+                        usuario.telefones = [telefone];
 
-                    usuario.endereco.cep = cep;
-                    usuario.endereco.cidade = cidade;
-                    usuario.endereco.estado = estado;
-                    usuario.endereco.bairro = bairro;
-                    usuario.endereco.numero = numero;
-                    usuario.endereco.logradouro = logradouro;
-                    usuario.endereco.complemento = complemento;
+                        usuario.acesso.nomeUsuario = username;
+                        usuario.acesso.senha = password;
+                        usuario.acesso.dica1 = dica1;
+                        usuario.acesso.dica2 = dica2;
 
+                        usuario.endereco.cep = cep;
+                        usuario.endereco.cidade = cidade;
+                        usuario.endereco.estado = estado;
+                        usuario.endereco.bairro = bairro;
+                        usuario.endereco.numero = numero;
+                        usuario.endereco.logradouro = logradouro;
+                        usuario.endereco.complemento = complemento;
 
-                    if (username.length > 0 && password.length > 0 && dica1.length > 0 && dica2.length > 0) {
-                        const calls = new Calls();
-                        calls.privateCall("usuarios", usuario, "post", "")
-                            .then(response => {
-                                Alert.alert("Parabéns", "Seu cadastro foi efetuado!");
+                        if (password == password1) {
+                            if (username.length > 0 && password.length > 0 && dica1.length > 0 && dica2.length > 0) {
+                                const calls = new Calls();
+                                calls.privateCall("usuarios", usuario, "post", "")
+                                    .then(response => {
+                                        Alert.alert("Parabéns", "Seu cadastro foi efetuado!");
 
-                                const handler = new TokenHandler();
-                                handler.getToken(username, password).then(response => {
-                                    const utils = new AsyncStorageUtils();
-                                    utils.set("token", response.data.Authorization);
+                                        const handler = new TokenHandler();
+                                        handler.getToken(username, password).then(response => {
+                                            const utils = new AsyncStorageUtils();
+                                            utils.set("token", response.data.Authorization);
 
-                                    navigation.reset({
-                                        index: 0,
-                                        routes: [{ name: 'home' }],
+                                            navigation.reset({
+                                                index: 0,
+                                                routes: [{ name: 'home' }],
+                                            });
+
+                                        }).catch(err => {
+                                            Alert.alert("Usuário inválido", "Senha incorreta, tente novamente.");
+                                        });
+
+                                    })
+                                    .catch(err => {
+                                        console.log(err.response.data);
+
+                                        Alert.alert("Quase lá!", err.response.data.message);
                                     });
+                            } else {
+                                Alert.alert("Quase lá!", "Preencha todos os campos para concluir seu cadastro!");
+                            }
 
-                                }).catch(err => {
-                                    Alert.alert("Usuário inválido", "Senha incorreta, tente novamente.");
-                                });
+                        }else{
+                            Alert.alert("Erro", "As senha está diferente nos campos requeridos");
+                        }
 
-                            })
-                            .catch(err => {
-                                console.log(err.response.data);
-
-                                Alert.alert("Quase lá!", err.response.data.message);
-                            });
-                    } else {
-                        Alert.alert("Quase lá!", "Preencha todos os campos para concluir seu cadastro!");
-                    }
+                    }}
+                >
+                    <Text style={styles.buttonText}>CONCLUIR</Text>
+                </TouchableOpacity>
 
 
-
-
-
-
-
-                }}
-            >
-                <Text style={styles.buttonText}>CONCLUIR</Text>
-            </TouchableOpacity>
-
+            </ScrollView>
 
         </View>
     );

@@ -171,7 +171,7 @@ export default function Configurations({ navigation }: { navigation: any }) {
                             });
                         }}
                     >
-                        <Text style={styles.textButton}>Deslogar</Text>
+                        <Text style={styles.textButton}>Sair</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.mainButton}
                         onPress={() => {
