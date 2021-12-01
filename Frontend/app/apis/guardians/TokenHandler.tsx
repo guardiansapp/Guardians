@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class TokenHandler {
     
-    private BASE_URL = "https://guardiansapp.herokuapp.com/";
+    private BASE_URL = "http://localhost:8080/";
 
     public getToken(user:String, password:String) {
 
