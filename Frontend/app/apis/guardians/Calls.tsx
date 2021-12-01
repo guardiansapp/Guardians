@@ -3,7 +3,7 @@ import AsyncStorageUtils from '../../util/AsyncStorageUtils';
 
 export default class Calls {
     
-    private BASE_URL = "https://guardiansapp.herokuapp.com/";
+    private BASE_URL = "http://localhost:8080/";
     private storageUtils = new AsyncStorageUtils();
 
     public async privateCall(url :string, data : object, method : string, token : string | null) {
